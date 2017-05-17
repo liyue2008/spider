@@ -1,0 +1,32 @@
+#logging.level.org.springframework.web: "WARN"
+
+logging:
+  file: ./logs/spider.log
+
+
+
+spider:
+  preview:
+    expire-sec: 600
+  worker-thread-count: 20
+  result:
+    path: results
+    max: 20
+spring:
+  application:
+    name: spider
+  datasource:
+    url: jdbc:hsqldb:file:database/spider
+    username: SA
+    password:
+    driver-class-name: org.hsqldb.jdbc.JDBCDriver
+    platform: hsqldb
+    initialize: false #启动时不初始化数据库
+    tomcat:
+      max-idle: 10
+      min-idle: 5
+      max-wait: 10000
+      initial-size: 5
+      validation-query: SELECT 1
+      test-on-borrow: false
+      test-while-idle: true

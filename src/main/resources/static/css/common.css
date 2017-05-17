@@ -1,0 +1,43 @@
+.main-div {
+    padding-top: 70px;
+    padding-bottom: 30px;
+    min-height: 600px;
+}
+
+.btn-table-header{
+    margin-bottom: 10px;
+}
+
+.right-head-buttons{
+    padding-top: 20px;
+}
+
+.ul-style-none{
+    list-style: none;
+
+}
+.ul-no-indent,
+.ul-no-indent li{
+    margin-left: 0;
+    padding-left: 0;
+}
+
+.label-inline{
+    margin-top: 9px;
+}
+
+
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}

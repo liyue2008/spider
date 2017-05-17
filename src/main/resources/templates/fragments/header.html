@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-cn"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:fragment="title" th:text="${title==null?'':title+' - '} + '在线爬虫系统'">在线爬虫系统</title>
+</head>
+<body>
+<!-- Fixed navbar -->
+<nav th:fragment="header" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed  hidden-xs hidden-sm" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#" th:href="@{/index.html}">在线爬虫系统</a>
+        </div>
+
+        <div id="navbar" class="navbar-collapse collapse hidden-xs hidden-sm">
+            <ul class="nav navbar-nav">
+                <li th:class="${classActiveIndex}" class="active"><a th:href="@{/index.html}"  href="index.html" >首页</a></li>
+                <li th:class="${classActiveJobConfigList}"><a th:href="@{/job-config-list.html}"  href="job-config-list.html">任务配置</a></li>
+                <li th:class="${classActiveParserConfigList}">
+                    <a th:href="@{/parser-config-list.html}"  href="parser-config-list.html">解析器配置</a>
+                </li>
+                <li th:class="${classActiveProxyList}"><a th:href="@{/proxy-list.html}"  href="proxy-list.html">代理列表</a></li>
+
+            </ul>
+        </div><!--/.nav-collapse -->
+
+
+    </div>
+</nav>
+</body>
+</html>

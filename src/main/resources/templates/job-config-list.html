@@ -1,0 +1,214 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:replace="fragments/header :: title">当爪</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="webjars/bootstrap/3.3.7/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" type="text/css" href="webjars/animate.css/3.5.2/animate.min.css"/>
+
+    <link rel="stylesheet" th:href="@{/css/common.css}"
+          href="../css/common.css"/>
+
+    <script th:inline="javascript">
+        var contextPath = /*[[@{/}]]*/ '/';
+    </script>
+</head>
+<body>
+<!--/*@thymesVar id="jobConfigs" type="java.util.List<com.github.liyue2008.spider.web.vo.JobConfigVo>"*/-->
+
+<nav class="navbar navbar-inverse" th:replace="fragments/header :: header">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">当爪-简单高效的爬虫系统</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse hidden-xs hidden-sm">
+            <ul class="nav navbar-nav">
+                <li><a th:href="@{/index.html}" href="index.html">首页</a></li>
+                <li class="active"><a href="job-config-list.html">任务配置</a></li>
+                <li><a href="parser-config-list.html">解析器配置</a></li>
+                <!--<li><a href="#">题库管理</a></li>-->
+            </ul>
+        </div><!--/.nav-collapse -->
+
+    </div>
+</nav>
+
+<div class="container" role="main">
+    <div class="main-div">
+        <ol class="breadcrumb">
+            <li><a href="index.html" th:href="@{/index.html}">首页</a></li>
+            <li class="active">任务配置</li>
+        </ol>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="page-header">
+                    <h2>任务配置</h2>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-1 col-md-offset-11">
+                <a class="btn btn-primary btn-block btn-table-header action-create-row" href="javascript:void(0);">新建</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-striped table-bordered table-hover data-table">
+                    <thead>
+                    <tr>
+                        <!--<th>序号</th>-->
+                        <th class="col-md-3">任务名称</th>
+                        <th class="col-md-1">类型</th>
+                        <th class="col-md-3">解析器</th>
+                        <th class="col-md-3">备注</th>
+                        <th class="col-md-2">操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="jobConfig,iter : ${jobConfigs}" class="data-row"
+                        th:attr="data-id=${jobConfig.id},data-job-label=${jobConfig.jobLabel},
+                        data-job-params=${jobConfig.jobParams},data-job-type=${jobConfig.jobType},
+                        data-parser-id=${jobConfig.parserId},data-remark=${jobConfig.remark},data-sort-result-index=${jobConfig.sortResultIndex},data-preview-url=${jobConfig.previewUrl},data-parser-config-name=${jobConfig.parserConfigName}">
+                        <!--<td th:text="${iter.index +1}">1</td>-->
+                        <td th:text="${jobConfig.jobLabel}">亚马逊本月特价</td>
+                        <td th:text="${jobConfig.jobType}">urlListJob</td>
+                        <td th:text="${jobConfig.parserConfigName}">亚马逊月榜周榜</td>
+                        <td th:text="${jobConfig.remark}">这里是备注信息备注信息</td>
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-sm btn-default action-edit-row" href="javascript:void(0);">编辑</a>
+                                <a class="btn btn-sm btn-danger action-delete-row" href="javascript:void(0)">删除</a>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
+    <hr/>
+
+    <footer th:replace="fragments/footer :: footer">
+        <p>&copy; Company 2014</p>
+    </footer>
+</div>
+
+<div class="modal fade" id="dataEditModal" tabindex="-1" role="dialog" aria-labelledby="dataEditModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form class="data-edit-form" data-toggle="validator">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="dataEditModalLabel">编辑</h4>
+            </div>
+            <div class="modal-body">
+
+                    <input type="hidden" name="data-id" id="data-id-input"/>
+                    <div class="form-group ">
+                        <label for="data-job-label-input">名称</label><small> (必填)</small>
+                        <input type="text" class="form-control" id="data-job-label-input" name="data-job-label" placeholder="请输入任务名称" required="required"/>
+                        <div class="help-block with-errors"></div>
+                    </div>
+                    <div class="form-group ">
+                        <label for="data-preview-url-input">目标URL</label>
+                        <input type="text" class="form-control" id="data-preview-url-input" name="data-preview-url" placeholder="用于预览目标页的URL"/>
+                    </div>
+                    <div class="form-group ">
+                        <label  for="data-job-type-select">类型</label>
+                        <select id="data-job-type-select" name="data-job-type" class="form-control">
+                            <option th:each="jobType,iter:${jobTypes}" th:value="${jobType}" th:text="${jobType}" th:selected="${iter.first}" value="urlListJob" selected="selected"></option>
+
+                        </select>
+                    </div>
+                    <div class="form-group ">
+                        <label  for="data-parser-id-select">解析器</label>
+                        <select id="data-parser-id-select" name="data-parser-id" class="form-control">
+                            <option th:each="parserConfig,iter:${parserConfigs}" th:value="${parserConfig.id}" th:text="${parserConfig.name}" th:selected="${iter.first}" value="0" selected="selected">亚马逊每日畅销</option>
+
+                        </select>
+                    </div>
+                    <div class="form-group ">
+                        <label for="data-sort-result-index-input">排序列</label>
+                        <input type="number" min="0" step="1" class="form-control" id="data-sort-result-index-input" name="data-sort-result-index" placeholder="对结果排序的列号，从0开始"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="data-job-params-text">参数</label>
+                        <textarea  class="form-control" id="data-job-params-text" name="data-job-params" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="data-remark-text">备注</label>
+                        <textarea  class="form-control" id="data-remark-text" name="data-remark" rows="3"></textarea>
+                    </div>
+
+
+            </div>
+            <div class="modal-footer">
+
+                <button type="submit" class="btn btn-primary action-data-edit-ok">确定</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="confirmDeleteModalLabel">删除确认</h4>
+            </div>
+            <div class="modal-body">
+                确定要删除选定项目吗？
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-danger" id="btnDeleteConfirm" data-dismiss="modal">删除</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="pleaseWaitDialog" tabindex="-1" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" >正在处理...</h4>
+            </div>
+            <div class="modal-body">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-info progress-bar-striped active" role="progressbar"  style="width:100%">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- /.container -->
+<script type="text/javascript" src="webjars/jquery/3.2.0/jquery.min.js"></script>
+<script type="text/javascript" src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="webjars/bootstrap-notify/3.1.3/bootstrap-notify.min.js"></script>
+<script type="text/javascript" th:src="@{/js/loading-mask.js}" src="../static/js/loading-mask.js"></script>
+<script type="text/javascript" th:src="@{/js/alert.js}" src="../static/js/alert.js"></script>
+<script type="text/javascript" th:src="@{/js/job-config-list.js}" src="../static/js/job-config-list.js"></script>
+
+</body>
+</html>
