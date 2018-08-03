@@ -1,6 +1,5 @@
 package com.github.liyue2008.spider.core.service;
 
-import com.dangdang.e.spider.core.entity.*;
 import com.github.liyue2008.spider.core.entity.*;
 import com.github.liyue2008.spider.core.mapper.JobConfigMapper;
 import com.github.liyue2008.spider.core.mapper.ParserConfigItemMapper;
